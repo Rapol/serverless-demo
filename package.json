@@ -1,0 +1,36 @@
+{
+  "name": "serverless-demo",
+  "version": "1.0.0",
+  "main": "severless.yml",
+  "license": "MIT",
+  "scripts": {
+    "deploy:dev": "SLS_DEBUG=* NODE_ENV=dev sls deploy",
+    "destroy:dev": "SLS_DEBUG=* NODE_ENV=dev sls remove",
+    "lint": "eslint ./src",
+    "precommit": "lint-staged",
+    "serve": "sls offline start",
+    "serve:dev": "NODE_ENV=dev sls offline start",
+    "debug": "node --inspect=5858 ./node_modules/serverless/bin/serverless offline start",
+    "invoke:palindrome:get-palidrome-good": "sls invoke local --function palindrome --path fixtures/palindrome/good-palindrome.json",
+    "watch:palindrome:get-palidrome-good": "sls invoke local --function palindrome --path fixtures/palindrome/good-palindrome.json",
+    "tail:palindrome:get-app-info": "sls logs --function palidrome --tail"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.216.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-mocha": "^5.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "serverless-offline": "^3.16.0"
+  },
+  "dependencies": {},
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  }
+}
