@@ -1,17 +1,6 @@
-const AWS = require('aws-sdk'); // eslint-disable-line
-
-
-module.exports.handler = (event, context) => {
-    console.log(event);
-    const { requestId } = event.requestContext;
-    const statusCode = 200;
-    return {
-        statusCode,
-        headers: null,
-        body: {
-            status: statusCode,
-            data: {
-            },
-        },
-    };
+module.exports.handler = async (event, context) => {
+    console.log(`EVENT = ${JSON.stringify(event, null, 4)}`);
+    const message = 'Hello Serverless World!';
+    console.log(message);
+    return message;
 };
