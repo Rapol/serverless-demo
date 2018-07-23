@@ -1,0 +1,64 @@
+service: serverless-demo
+
+plugins:
+  - serverless-offline
+
+# Custom variables
+custom:
+  variables:
+    PALINDROME_TABLE_NAME: palindrome_history
+  # profiles for each environment
+  profiles:
+    dev: rapol-dev-protonmail
+
+provider:
+  name: "aws"
+  runtime: "nodejs8.10"
+  stage: "${opt:stage, 'dev'}"
+  region: "${opt:region, 'us-east-1'}"
+  profile: ${self:custom.profiles.${self:provider.stage}}
+  memorySize: "128"
+  timeout: "10"
+  versionFunctions: "false"
+  environment:
+    NODE_ENV: "${self:provider.stage}"
+    PALINDROME_TABLE_NAME: "${self:custom.variables.PALINDROME_TABLE_NAME}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: arn:aws:logs:${self:provider.region}:*:*
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource:
+        Fn::Join:
+          - ':'
+          - - arn:aws:dynamodb
+            - Ref: AWS::Region
+            - Ref: AWS::AccountId
+            - "table/${self:custom.variables.PALINDROME_TABLE_NAME}"
+
+resources:
+  Resources:
+    PalindromeTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.variables.PALINDROME_TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: requestId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: requestId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 2
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - node_modules/**

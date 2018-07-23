@@ -1,0 +1,12 @@
+{
+    "queryStringParameters": {
+      "palindrome": "racecar"
+    },
+    "requestContext": {
+      "resourcePath": "/palindrome",
+      "httpMethod": "GET",
+      "identity": {
+        "cognitoIdentityId": null
+      }
+    }
+  }
