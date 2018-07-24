@@ -43,3 +43,8 @@ functions:
       - http:
           path: /palindrome
           method: get
+          request:
+            parameters:
+              querystrings:
+                palindrome: true
+                

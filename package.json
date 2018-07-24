@@ -12,7 +12,9 @@
     "debug": "node --inspect=5858 ./node_modules/serverless/bin/serverless offline start",
     "invoke:palindrome:get-palidrome-good": "sls invoke local --function palindrome --path fixtures/palindrome/good-palindrome.json",
     "watch:palindrome:get-palidrome-good": "sls invoke local --function palindrome --path fixtures/palindrome/good-palindrome.json",
-    "tail:palindrome:get-app-info": "sls logs --function palidrome --tail"
+    "invoke:palindrome:get-palidrome-bad": "sls invoke local --function palindrome --path fixtures/palindrome/bad-palindrome.json",
+    "watch:palindrome:get-palidrome-bad": "sls invoke local --function palindrome --path fixtures/palindrome/bad-palindrome.json",
+    "tail:palindrome": "sls logs --function palindrome --tail"
   },
   "devDependencies": {
     "aws-sdk": "^2.216.1",
