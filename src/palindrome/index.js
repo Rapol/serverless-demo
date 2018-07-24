@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk'); // eslint-disable-line
 
+const os = require('os');
+
 const dynamoDoc = new AWS.DynamoDB.DocumentClient();
 
 function checkPalindrome(string) {
@@ -22,6 +24,7 @@ async function getPalidrome(requestId, palindrome) {
         palindrome,
         isPalindrome,
         timestamp: new Date().toISOString(),
+        hostname: os.hostname(),
     };
     await insertToDynamo(process.env.PALINDROME_TABLE_NAME, dynamoPayload);
     return { isPalindrome };
