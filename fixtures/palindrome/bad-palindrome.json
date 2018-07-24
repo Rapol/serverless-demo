@@ -7,6 +7,7 @@
       "httpMethod": "GET",
       "identity": {
         "cognitoIdentityId": null
-      }
+      },
+      "requestId": "321"
     }
   }
