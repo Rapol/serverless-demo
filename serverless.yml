@@ -35,3 +35,11 @@ package:
   excludeDevDependencies: true
   exclude:
     - node_modules/**
+
+functions:
+  palindrome:
+    handler: src/palindrome/index.handler
+    events:
+      - http:
+          path: /palindrome
+          method: get
